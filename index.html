@@ -1,0 +1,1389 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estrategia Digital — Grupo Trimodos</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --navy:    #0D2B45;
+      --navy2:   #0A2038;
+      --teal:    #1D9E75;
+      --teal-dk: #0F6E56;
+      --teal-lt: #E1F5EE;
+      --white:   #FFFFFF;
+      --off:     #F5F8F7;
+      --gray:    #64748B;
+      --gray-lt: #E2EAE8;
+      --dark:    #1A2E3B;
+      --amber:   #F59E0B;
+      --purple:  #7C3AED;
+      --coral:   #E11D48;
+      --li-blue: #0A66C2;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'DM Sans', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--navy2);
+      color: var(--white);
+      overflow-x: hidden;
+    }
+
+    /* ─── NAV ─────────────────────────────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1rem 3rem;
+      background: rgba(10, 32, 56, 0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(29, 158, 117, 0.2);
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--teal);
+      letter-spacing: 0.02em;
+    }
+    .nav-logo span { color: var(--white); }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      color: rgba(255,255,255,0.65);
+      text-decoration: none;
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--teal); }
+
+    /* ─── HERO ────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 8rem 3rem 5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 70% 60% at 80% 30%, rgba(29,158,117,0.12) 0%, transparent 70%),
+                  radial-gradient(ellipse 50% 50% at 10% 80%, rgba(124,58,237,0.08) 0%, transparent 60%);
+    }
+    .hero-grid-lines {
+      position: absolute; inset: 0; pointer-events: none;
+      background-image: linear-gradient(rgba(29,158,117,0.04) 1px, transparent 1px),
+                        linear-gradient(90deg, rgba(29,158,117,0.04) 1px, transparent 1px);
+      background-size: 60px 60px;
+    }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-mono);
+      font-size: 0.72rem;
+      color: var(--teal);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 1.8rem;
+    }
+    .hero-eyebrow::before {
+      content: '';
+      display: block; width: 2rem; height: 1px;
+      background: var(--teal);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(3rem, 7vw, 6.5rem);
+      line-height: 1.05;
+      max-width: 16ch;
+      margin-bottom: 1.5rem;
+    }
+    .hero h1 em {
+      font-style: italic;
+      color: var(--teal);
+    }
+    .hero-sub {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.6);
+      max-width: 48ch;
+      line-height: 1.7;
+      margin-bottom: 3rem;
+    }
+    .hero-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+    .btn-primary {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      background: var(--teal);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      letter-spacing: 0.02em;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .btn-primary:hover { background: var(--teal-dk); transform: translateY(-2px); }
+    .btn-ghost {
+      display: inline-flex; align-items: center; gap: 0.5rem;
+      padding: 0.85rem 2rem;
+      border: 1px solid rgba(255,255,255,0.2);
+      color: rgba(255,255,255,0.75);
+      font-size: 0.9rem;
+      text-decoration: none;
+      transition: border-color 0.2s, color 0.2s;
+    }
+    .btn-ghost:hover { border-color: var(--teal); color: var(--teal); }
+    .hero-stats {
+      position: absolute; right: 5%; bottom: 12%;
+      display: flex; flex-direction: column; gap: 1.5rem;
+    }
+    .hero-stat {
+      text-align: right;
+      border-right: 2px solid var(--teal);
+      padding-right: 1rem;
+    }
+    .hero-stat-num {
+      font-family: var(--font-display);
+      font-size: 2.8rem;
+      color: var(--teal);
+      line-height: 1;
+    }
+    .hero-stat-label {
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+    .scroll-hint {
+      position: absolute; bottom: 2.5rem; left: 50%;
+      transform: translateX(-50%);
+      display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+      color: rgba(255,255,255,0.3);
+      font-size: 0.7rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      animation: bounce 2s infinite;
+    }
+    .scroll-hint svg { opacity: 0.4; }
+    @keyframes bounce {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ─── SECTIONS ───────────────────────── */
+    section { padding: 6rem 3rem; position: relative; }
+    .section-label {
+      font-family: var(--font-mono);
+      font-size: 0.7rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 1rem;
+      display: flex; align-items: center; gap: 0.6rem;
+    }
+    .section-label::before {
+      content: '';
+      display: block; width: 2rem; height: 1px;
+      background: var(--teal);
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      line-height: 1.15;
+      margin-bottom: 1rem;
+      max-width: 20ch;
+    }
+    .section-title em { color: var(--teal); font-style: italic; }
+    .section-sub {
+      color: rgba(255,255,255,0.55);
+      max-width: 55ch;
+      line-height: 1.75;
+      margin-bottom: 4rem;
+    }
+
+    /* ─── GEN Z SECTION ──────────────────── */
+    #generaciones {
+      background: linear-gradient(180deg, var(--navy2) 0%, #0A1628 100%);
+    }
+    .gen-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 3rem;
+    }
+    .gen-card {
+      border: 1px solid;
+      padding: 2.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .gen-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    }
+    .gen-card.genz { border-color: rgba(124,58,237,0.4); background: rgba(124,58,237,0.05); }
+    .gen-card.genz::before { background: var(--purple); }
+    .gen-card.alpha { border-color: rgba(29,158,117,0.4); background: rgba(29,158,117,0.05); }
+    .gen-card.alpha::before { background: var(--teal); }
+    .gen-badge {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      margin-bottom: 1.5rem;
+    }
+    .gen-card.genz .gen-badge { background: rgba(124,58,237,0.2); color: #C4B5FD; }
+    .gen-card.alpha .gen-badge { background: rgba(29,158,117,0.2); color: #9FE1CB; }
+    .gen-years {
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      line-height: 1;
+      margin-bottom: 0.5rem;
+      opacity: 0.15;
+      position: absolute;
+      right: 2rem; top: 2rem;
+    }
+    .gen-card.genz .gen-years { color: var(--purple); }
+    .gen-card.alpha .gen-years { color: var(--teal); }
+    .gen-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.7rem;
+      margin-bottom: 0.5rem;
+    }
+    .gen-dates {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 1.5rem;
+      font-family: var(--font-mono);
+    }
+    .gen-points { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
+    .gen-points li {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.75);
+      line-height: 1.6;
+      padding-left: 1.2rem;
+      position: relative;
+    }
+    .gen-points li::before {
+      content: '→';
+      position: absolute; left: 0;
+      font-size: 0.8rem;
+    }
+    .gen-card.genz .gen-points li::before { color: #C4B5FD; }
+    .gen-card.alpha .gen-points li::before { color: #9FE1CB; }
+    .gen-alert {
+      background: rgba(245, 158, 11, 0.08);
+      border: 1px solid rgba(245, 158, 11, 0.3);
+      border-left: 3px solid var(--amber);
+      padding: 1.5rem 2rem;
+      display: flex; gap: 1rem; align-items: flex-start;
+    }
+    .gen-alert-icon { font-size: 1.4rem; flex-shrink: 0; line-height: 1.4; }
+    .gen-alert p {
+      color: rgba(255,255,255,0.85);
+      line-height: 1.7;
+      font-size: 0.95rem;
+    }
+    .gen-alert strong { color: var(--amber); }
+
+    /* ─── VENTAJA COMPETITIVA ─────────────── */
+    #ventaja { background: var(--navy); }
+    .ventaja-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1px;
+      background: rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.07);
+      margin-bottom: 3rem;
+    }
+    .ventaja-cell {
+      padding: 2.5rem;
+      background: var(--navy);
+      transition: background 0.2s;
+    }
+    .ventaja-cell:hover { background: rgba(29,158,117,0.06); }
+    .ventaja-cell-icon { font-size: 2rem; margin-bottom: 1rem; }
+    .ventaja-cell h3 {
+      font-family: var(--font-display);
+      font-size: 1.3rem;
+      margin-bottom: 0.6rem;
+      color: var(--white);
+    }
+    .ventaja-cell p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.55);
+      line-height: 1.7;
+    }
+    .ventaja-highlight {
+      background: var(--teal);
+      padding: 3rem;
+      text-align: center;
+      grid-column: span 2;
+    }
+    .ventaja-highlight h3 {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      margin-bottom: 0.5rem;
+    }
+    .ventaja-highlight p { font-size: 1rem; opacity: 0.85; }
+
+    /* ─── REDES SOCIALES ─────────────────── */
+    #redes { background: #060F1A; }
+    .redes-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+    }
+    .red-card {
+      border: 1px solid rgba(255,255,255,0.08);
+      padding: 2rem;
+      position: relative;
+      overflow: hidden;
+      transition: border-color 0.25s, transform 0.25s;
+    }
+    .red-card:hover { transform: translateY(-4px); }
+    .red-card.linkedin:hover { border-color: #0A66C2; }
+    .red-card.instagram:hover { border-color: #E1306C; }
+    .red-card.youtube:hover { border-color: #FF0000; }
+    .red-card-num {
+      position: absolute; top: 1.5rem; right: 1.5rem;
+      font-family: var(--font-display);
+      font-size: 4rem;
+      font-weight: 900;
+      opacity: 0.05;
+      line-height: 1;
+    }
+    .red-icon {
+      width: 2.8rem; height: 2.8rem;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.3rem;
+      margin-bottom: 1.2rem;
+    }
+    .red-card.linkedin .red-icon { background: rgba(10,102,194,0.15); }
+    .red-card.instagram .red-icon { background: rgba(225,48,108,0.15); }
+    .red-card.youtube .red-icon { background: rgba(255,0,0,0.15); }
+    .red-prioridad {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.6rem;
+    }
+    .red-card.linkedin .red-prioridad { color: #5B9BD5; }
+    .red-card.instagram .red-prioridad { color: #F472B6; }
+    .red-card.youtube .red-prioridad { color: #FCA5A5; }
+    .red-card h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 0.4rem;
+    }
+    .red-freq {
+      display: inline-block;
+      font-size: 0.75rem;
+      padding: 0.25rem 0.6rem;
+      margin-bottom: 1.2rem;
+    }
+    .red-card.linkedin .red-freq { background: rgba(10,102,194,0.2); color: #93C5FD; }
+    .red-card.instagram .red-freq { background: rgba(225,48,108,0.2); color: #FDA4AF; }
+    .red-card.youtube .red-freq { background: rgba(255,0,0,0.2); color: #FCA5A5; }
+    .red-items { list-style: none; display: flex; flex-direction: column; gap: 0.55rem; }
+    .red-items li {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .red-items li::before {
+      content: '·';
+      position: absolute; left: 0;
+      color: rgba(255,255,255,0.25);
+      font-size: 1.2rem;
+      line-height: 1.1;
+    }
+
+    /* ─── LINKEDIN POSTS ─────────────────── */
+    #posts { background: var(--navy2); }
+    .posts-intro {
+      display: grid;
+      grid-template-columns: 1fr 1.5fr;
+      gap: 4rem;
+      align-items: start;
+      margin-bottom: 4rem;
+    }
+    .posts-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    /* LinkedIn post mockup */
+    .li-post {
+      background: #1B1F23;
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 4px;
+      overflow: hidden;
+      transition: transform 0.25s, box-shadow 0.25s;
+      position: relative;
+    }
+    .li-post:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+    }
+    .li-post-header {
+      padding: 1rem 1.2rem 0.8rem;
+      display: flex; gap: 0.8rem; align-items: flex-start;
+    }
+    .li-avatar {
+      width: 2.4rem; height: 2.4rem;
+      border-radius: 50%;
+      background: var(--teal);
+      display: flex; align-items: center; justify-content: center;
+      font-weight: 700;
+      font-size: 0.75rem;
+      flex-shrink: 0;
+      color: var(--white);
+    }
+    .li-name {
+      font-weight: 600;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.95);
+      line-height: 1.3;
+    }
+    .li-meta {
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+      margin-top: 0.15rem;
+    }
+    .li-follow {
+      margin-left: auto;
+      font-size: 0.75rem;
+      color: #70B5F9;
+      font-weight: 600;
+      cursor: pointer;
+      flex-shrink: 0;
+    }
+    .li-body {
+      padding: 0 1.2rem 1rem;
+      font-size: 0.83rem;
+      color: rgba(255,255,255,0.78);
+      line-height: 1.65;
+    }
+    .li-body .li-hook {
+      font-weight: 600;
+      color: rgba(255,255,255,0.95);
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .li-body .li-hashtags {
+      color: #70B5F9;
+      font-size: 0.78rem;
+      display: block;
+      margin-top: 0.8rem;
+    }
+    .li-image {
+      width: 100%;
+      height: 160px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      position: relative;
+      overflow: hidden;
+    }
+    .li-image-co2 {
+      background: linear-gradient(135deg, #0D2B45 0%, #0F3D2A 100%);
+      color: var(--teal);
+    }
+    .li-image-historia {
+      background: linear-gradient(135deg, #1A1A2E 0%, #0D2B45 100%);
+      color: #C4B5FD;
+    }
+    .li-image-genz {
+      background: linear-gradient(135deg, #0F1729 0%, #1A0F2E 100%);
+      color: var(--amber);
+    }
+    .li-image-intermodal {
+      background: linear-gradient(135deg, #0D2B45 0%, #0A2038 100%);
+      color: #9FE1CB;
+    }
+    .li-image-infographic {
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: 1rem;
+    }
+    .infog-row {
+      display: flex; align-items: center; gap: 0.8rem;
+      width: 100%; padding: 0.5rem 0.8rem;
+      background: rgba(255,255,255,0.04);
+      border-radius: 2px;
+    }
+    .infog-label { font-size: 0.7rem; flex: 1; color: rgba(255,255,255,0.6); }
+    .infog-bar-wrap { flex: 2; height: 8px; background: rgba(255,255,255,0.06); border-radius: 1px; overflow: hidden; }
+    .infog-bar { height: 100%; border-radius: 1px; }
+    .infog-val { font-size: 0.7rem; font-weight: 700; min-width: 2.5rem; text-align: right; }
+    .li-reactions {
+      padding: 0.5rem 1.2rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; gap: 0.4rem;
+      font-size: 0.72rem;
+      color: rgba(255,255,255,0.35);
+    }
+    .li-reactions .react-icons { display: flex; gap: -4px; }
+    .li-react-icon {
+      width: 1.1rem; height: 1.1rem;
+      border-radius: 50%;
+      border: 1.5px solid #1B1F23;
+      display: inline-flex; align-items: center; justify-content: center;
+      font-size: 0.55rem;
+    }
+    .li-actions {
+      padding: 0.2rem 0.5rem 0.6rem;
+      display: flex; gap: 0;
+    }
+    .li-action {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center; gap: 0.4rem;
+      padding: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.4);
+      cursor: pointer;
+      transition: color 0.15s, background 0.15s;
+      border-radius: 2px;
+    }
+    .li-action:hover { color: rgba(255,255,255,0.8); background: rgba(255,255,255,0.04); }
+    .li-tag {
+      position: absolute; top: 0.7rem; right: 0.7rem;
+      font-family: var(--font-mono);
+      font-size: 0.6rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.5rem;
+      background: var(--teal);
+      color: var(--white);
+    }
+
+    /* Why it works panel */
+    .post-analysis {
+      background: rgba(29,158,117,0.06);
+      border: 1px solid rgba(29,158,117,0.2);
+      padding: 1.5rem;
+      margin-top: 1rem;
+    }
+    .post-analysis h4 {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--teal);
+      margin-bottom: 0.8rem;
+    }
+    .post-analysis ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+    .post-analysis li {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.6);
+      padding-left: 1.2rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .post-analysis li::before {
+      content: '✓';
+      position: absolute; left: 0;
+      color: var(--teal);
+      font-size: 0.7rem;
+      line-height: 1.7;
+    }
+
+    /* ─── FASES ───────────────────────────── */
+    #fases { background: var(--navy); }
+    .fases-timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .fases-timeline::before {
+      content: '';
+      position: absolute;
+      top: 2.8rem; left: 10%; right: 10%;
+      height: 1px;
+      background: rgba(255,255,255,0.1);
+      z-index: 0;
+    }
+    .fase {
+      padding: 2.5rem 2rem;
+      position: relative;
+      border-right: 1px solid rgba(255,255,255,0.06);
+    }
+    .fase:last-child { border-right: none; }
+    .fase-num {
+      width: 3rem; height: 3rem;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 1.1rem;
+      margin-bottom: 1.5rem;
+      position: relative; z-index: 1;
+    }
+    .fase:nth-child(1) .fase-num { background: var(--teal); color: var(--white); }
+    .fase:nth-child(2) .fase-num { background: #1865A4; color: var(--white); }
+    .fase:nth-child(3) .fase-num { background: var(--amber); color: var(--dark); }
+    .fase-period {
+      font-family: var(--font-mono);
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 0.4rem;
+    }
+    .fase:nth-child(1) .fase-period { color: var(--teal); }
+    .fase:nth-child(2) .fase-period { color: #5B9BD5; }
+    .fase:nth-child(3) .fase-period { color: var(--amber); }
+    .fase h3 {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+    .fase-items { list-style: none; display: flex; flex-direction: column; gap: 0.6rem; margin-bottom: 1.5rem; }
+    .fase-items li {
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.6);
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.5;
+    }
+    .fase-items li::before {
+      content: '→';
+      position: absolute; left: 0;
+      font-size: 0.7rem;
+      line-height: 1.7;
+    }
+    .fase:nth-child(1) .fase-items li::before { color: var(--teal); }
+    .fase:nth-child(2) .fase-items li::before { color: #5B9BD5; }
+    .fase:nth-child(3) .fase-items li::before { color: var(--amber); }
+    .fase-kpi {
+      padding: 0.7rem 1rem;
+      font-size: 0.8rem;
+      font-weight: 600;
+      border-left: 2px solid;
+    }
+    .fase:nth-child(1) .fase-kpi { border-color: var(--teal); color: #9FE1CB; background: rgba(29,158,117,0.08); }
+    .fase:nth-child(2) .fase-kpi { border-color: #1865A4; color: #93C5FD; background: rgba(24,101,164,0.08); }
+    .fase:nth-child(3) .fase-kpi { border-color: var(--amber); color: #FCD34D; background: rgba(245,158,11,0.08); }
+
+    /* ─── CIERRE ─────────────────────────── */
+    #cierre {
+      background: linear-gradient(180deg, var(--navy) 0%, #000D1A 100%);
+      text-align: center;
+      padding: 8rem 3rem;
+    }
+    #cierre h2 {
+      font-family: var(--font-display);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+      max-width: 20ch;
+      margin-left: auto; margin-right: auto;
+    }
+    #cierre h2 em { color: var(--teal); font-style: italic; }
+    #cierre p {
+      color: rgba(255,255,255,0.5);
+      font-size: 1rem;
+      max-width: 45ch;
+      line-height: 1.8;
+      margin: 0 auto 3rem;
+    }
+    .next-steps {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      max-width: 480px;
+      margin: 0 auto 4rem;
+      text-align: left;
+    }
+    .next-step {
+      display: flex; gap: 1rem; align-items: flex-start;
+      padding: 1.2rem 1.5rem;
+      border: 1px solid rgba(255,255,255,0.07);
+      background: rgba(255,255,255,0.02);
+    }
+    .next-step-num {
+      font-family: var(--font-display);
+      font-size: 1.5rem;
+      color: var(--teal);
+      opacity: 0.4;
+      line-height: 1.2;
+      flex-shrink: 0;
+    }
+    .next-step p {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.7);
+      margin: 0;
+      line-height: 1.6;
+    }
+    .site-footer {
+      padding: 2rem 3rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      display: flex; align-items: center; justify-content: space-between;
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.25);
+    }
+    .footer-logo {
+      font-family: var(--font-display);
+      color: var(--teal);
+      opacity: 0.6;
+    }
+
+    /* ─── ANIMATIONS ─────────────────────── */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+    .fade-up.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+      section { padding: 4rem 1.5rem; }
+      .hero { padding: 6rem 1.5rem 5rem; }
+      .hero-stats { display: none; }
+      .gen-grid, .redes-grid, .posts-grid, .fases-timeline { grid-template-columns: 1fr; }
+      .ventaja-grid { grid-template-columns: 1fr; }
+      .ventaja-highlight { grid-column: span 1; }
+      .posts-intro { grid-template-columns: 1fr; gap: 2rem; }
+      .fases-timeline::before { display: none; }
+      .fase { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- NAV -->
+  <nav>
+    <div class="nav-logo">Grupo <span>Trimodos</span></div>
+    <ul class="nav-links">
+      <li><a href="#generaciones">Generaciones</a></li>
+      <li><a href="#ventaja">Ventaja</a></li>
+      <li><a href="#redes">Redes</a></li>
+      <li><a href="#posts">Posts</a></li>
+      <li><a href="#fases">Plan</a></li>
+    </ul>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-grid-lines"></div>
+
+    <div class="hero-eyebrow">Plan de marketing digital · 2025</div>
+
+    <h1>Crecemos juntos,<br><em>digitalmente.</em></h1>
+
+    <p class="hero-sub">
+      Una estrategia para aumentar las ventas y la presencia en redes sociales
+      de Grupo Trimodos, aprovechando más de 40 años de experiencia y la única
+      red intermodal de la región.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#posts" class="btn-primary">
+        Ver ejemplos de posts
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="#fases" class="btn-ghost">Ver el plan completo</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-num">40+</div>
+        <div class="hero-stat-label">años de experiencia</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">3</div>
+        <div class="hero-stat-label">empresas especializadas</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">80%</div>
+        <div class="hero-stat-label">menos CO₂ que el camión</div>
+      </div>
+    </div>
+
+    <div class="scroll-hint">
+      <svg width="16" height="24" viewBox="0 0 16 24" fill="none" stroke="currentColor" stroke-width="1.5">
+        <rect x="1" y="1" width="14" height="22" rx="7"/>
+        <circle cx="8" cy="7" r="1.5" fill="currentColor" stroke="none"/>
+      </svg>
+      Scroll
+    </div>
+  </section>
+
+  <!-- GENERACIONES -->
+  <section id="generaciones">
+    <div class="section-label">El reto generacional</div>
+    <h2 class="section-title">Tus próximos clientes<br><em>ya son digitales.</em></h2>
+    <p class="section-sub">
+      Las Generaciones Z y Alpha son nativos digitales. Serán los directores de
+      operaciones, jefes de compras y responsables de logística de las próximas
+      décadas. Si Trimodos no existe digitalmente para ellos, simplemente no existe.
+    </p>
+
+    <div class="gen-grid fade-up">
+      <div class="gen-card genz">
+        <div class="gen-years">Z</div>
+        <div class="gen-badge">Generación Z · Nacidos 1997–2012</div>
+        <h3>13–28 años hoy</h3>
+        <div class="gen-dates">Ya en el mercado laboral</div>
+        <ul class="gen-points">
+          <li>Ya trabajan como directores, jefes de compras y responsables de operaciones en empresas reales</li>
+          <li>Buscan proveedores en LinkedIn, Google e Instagram — no en la guía telefónica</li>
+          <li>Comparan servicios online antes de hacer una sola llamada telefónica</li>
+          <li>Valoran la transparencia digital y la sostenibilidad como requisito, no como diferencial</li>
+          <li>Si no encuentran reseñas, casos de éxito o presencia activa, descartarán al proveedor</li>
+        </ul>
+      </div>
+      <div class="gen-card alpha">
+        <div class="gen-years">α</div>
+        <div class="gen-badge">Generación Alpha · Nacidos 2013–2025</div>
+        <h3>0–12 años hoy</h3>
+        <div class="gen-dates">Los clientes de mañana</div>
+        <ul class="gen-points">
+          <li>En 10 años tomarán decisiones de compra en las empresas de sus padres</li>
+          <li>Nunca han conocido un mundo sin internet, smartphones o búsqueda instantánea</li>
+          <li>Esperarán que todo proveedor tenga presencia digital impecable como mínimo</li>
+          <li>Si Trimodos no existe digitalmente para ellos, directamente no será considerado</li>
+          <li>Son los hijos del streaming, el vídeo corto y la respuesta inmediata</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="gen-alert fade-up">
+      <div class="gen-alert-icon">⚡</div>
+      <p>
+        <strong>La ventana de oportunidad es ahora.</strong> Las empresas que construyan
+        su presencia digital en los próximos 2–3 años capturarán a estos clientes cuando
+        empiecen a tomar decisiones reales. Las que esperen encontrarán un mercado
+        ya ocupado. <strong>Cada mes sin estrategia digital es terreno cedido a la
+        competencia.</strong>
+      </p>
+    </div>
+  </section>
+
+  <!-- VENTAJA COMPETITIVA -->
+  <section id="ventaja">
+    <div class="section-label">La ventaja competitiva</div>
+    <h2 class="section-title">Lo que nadie<br><em>más tiene.</em></h2>
+    <p class="section-sub">
+      Grupo Trimodos posee el activo más difícil de replicar en el sector:
+      décadas de experiencia y la capacidad de mover cualquier carga por
+      tren, barco y carretera desde un único punto de contacto.
+    </p>
+
+    <div class="ventaja-grid fade-up">
+      <div class="ventaja-cell">
+        <div class="ventaja-cell-icon">🚂</div>
+        <h3>Ferroviario — Stinsa</h3>
+        <p>Más de 40 años operando transporte por ferrocarril a nivel nacional e internacional. El activo más diferenciador del grupo: muy pocas empresas de la región tienen esta capacidad.</p>
+      </div>
+      <div class="ventaja-cell">
+        <div class="ventaja-cell-icon">🚢</div>
+        <h3>Marítimo — Transargi</h3>
+        <p>Servicios FCL y LCL con red global de agentes. Exportación e importación desde los puertos de Castellón, Valencia y Sevilla con cobertura a todos los continentes.</p>
+      </div>
+      <div class="ventaja-cell">
+        <div class="ventaja-cell-icon">🚛</div>
+        <h3>Terrestre — Transargi</h3>
+        <p>FTL, grupaje y servicios urgentes por carretera. Cobertura peninsular completa con almacenes propios en Castellón y Sevilla para operaciones de cross-docking y almacenaje.</p>
+      </div>
+      <div class="ventaja-cell">
+        <div class="ventaja-cell-icon">🌿</div>
+        <h3>Sostenibilidad — El argumento del futuro</h3>
+        <p>El ferrocarril emite hasta un 80% menos de CO₂ que el camión. Con la normativa europea de emisiones apretando, este argumento vale oro ante cualquier empresa con objetivos ESG.</p>
+      </div>
+      <div class="ventaja-highlight">
+        <h3>TREN · MAR · CARRETERA</h3>
+        <p>Desde un único punto de contacto. Muy pocos competidores en España pueden ofrecer esto.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- REDES SOCIALES -->
+  <section id="redes">
+    <div class="section-label">Plan de redes sociales</div>
+    <h2 class="section-title">Tres canales,<br><em>tres objetivos.</em></h2>
+    <p class="section-sub">
+      Cada plataforma tiene un rol distinto. LinkedIn genera leads B2B,
+      Instagram humaniza la marca, YouTube posiciona como experto del sector.
+    </p>
+
+    <div class="redes-grid fade-up">
+      <div class="red-card linkedin">
+        <div class="red-card-num">1</div>
+        <div class="red-icon">💼</div>
+        <div class="red-prioridad">Prioridad 1 · B2B</div>
+        <h3>LinkedIn</h3>
+        <div class="red-freq">3–4 posts / semana</div>
+        <ul class="red-items">
+          <li>Infografías del sector logístico con datos propios</li>
+          <li>Casos de éxito anonimizados con métricas reales</li>
+          <li>Opinión experta sobre normativa y tendencias del sector</li>
+          <li>Vídeos cortos de operaciones reales en almacén y tren</li>
+          <li>Conexión directa con directores de logística y compras</li>
+        </ul>
+      </div>
+      <div class="red-card instagram">
+        <div class="red-card-num">2</div>
+        <div class="red-icon">📸</div>
+        <div class="red-prioridad">Prioridad 2 · Marca</div>
+        <h3>Instagram</h3>
+        <div class="red-freq">4–5 posts / semana</div>
+        <ul class="red-items">
+          <li>Fotografías del almacén, trenes y operaciones diarias</li>
+          <li>Presentación del equipo y cultura de empresa</li>
+          <li>Reels: "¿Cómo funciona el transporte intermodal?"</li>
+          <li>Behind the scenes del día a día en Castellón y Sevilla</li>
+          <li>Geoetiquetas para visibilidad local y regional</li>
+        </ul>
+      </div>
+      <div class="red-card youtube">
+        <div class="red-card-num">3</div>
+        <div class="red-icon">▶️</div>
+        <div class="red-prioridad">Prioridad 3 · Autoridad</div>
+        <h3>YouTube</h3>
+        <div class="red-freq">1–2 vídeos / mes</div>
+        <ul class="red-items">
+          <li>"Guía: exportar a Europa por ferrocarril en 2025"</li>
+          <li>Tour virtual del almacén de Castellón</li>
+          <li>Testimoniales de clientes con resultados medibles</li>
+          <li>Explicación del proceso intermodal paso a paso</li>
+          <li>Ventajas medioambientales del tren frente al camión</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- POSTS LINKEDIN -->
+  <section id="posts">
+    <div class="section-label">Ejemplos reales</div>
+    <h2 class="section-title">Así quedarían<br><em>los posts.</em></h2>
+
+    <div class="posts-intro">
+      <div>
+        <p class="section-sub" style="margin-bottom:1.5rem;">
+          Cuatro posts listos para publicar esta semana.
+          Cada uno apunta a un objetivo distinto: credibilidad,
+          captación, posicionamiento y diferenciación.
+        </p>
+        <div style="display:flex;flex-direction:column;gap:0.7rem;">
+          <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.55);">
+            <span style="color:var(--teal);font-weight:600;">✓</span> Textos listos para copiar y publicar
+          </div>
+          <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.55);">
+            <span style="color:var(--teal);font-weight:600;">✓</span> Cada post incluye CTA, hashtags y análisis
+          </div>
+          <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.55);">
+            <span style="color:var(--teal);font-weight:600;">✓</span> Diseñados para el algoritmo de LinkedIn B2B
+          </div>
+          <div style="display:flex;align-items:center;gap:0.8rem;font-size:0.85rem;color:rgba(255,255,255,0.55);">
+            <span style="color:var(--teal);font-weight:600;">✓</span> Reutilizables en Instagram como carrusel
+          </div>
+        </div>
+      </div>
+      <div style="background:rgba(29,158,117,0.06);border:1px solid rgba(29,158,117,0.2);padding:2rem;">
+        <div style="font-family:var(--font-mono);font-size:0.65rem;letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);margin-bottom:1rem;">Calendario semana 1</div>
+        <div style="display:flex;flex-direction:column;gap:0.7rem;">
+          <div style="display:flex;gap:1rem;align-items:center;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <span style="font-family:var(--font-mono);font-size:0.72rem;color:rgba(255,255,255,0.35);min-width:3rem;">LUN</span>
+            <span style="font-size:0.85rem;color:rgba(255,255,255,0.7);">Post #1: Dato impactante CO₂</span>
+            <span style="margin-left:auto;font-size:0.7rem;background:rgba(29,158,117,0.15);color:var(--teal);padding:0.15rem 0.5rem;">Credibilidad</span>
+          </div>
+          <div style="display:flex;gap:1rem;align-items:center;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <span style="font-family:var(--font-mono);font-size:0.72rem;color:rgba(255,255,255,0.35);min-width:3rem;">MIÉ</span>
+            <span style="font-size:0.85rem;color:rgba(255,255,255,0.7);">Post #2: Historia 40 años</span>
+            <span style="margin-left:auto;font-size:0.7rem;background:rgba(124,58,237,0.15);color:#C4B5FD;padding:0.15rem 0.5rem;">Confianza</span>
+          </div>
+          <div style="display:flex;gap:1rem;align-items:center;padding:0.6rem 0;border-bottom:1px solid rgba(255,255,255,0.05);">
+            <span style="font-family:var(--font-mono);font-size:0.72rem;color:rgba(255,255,255,0.35);min-width:3rem;">JUE</span>
+            <span style="font-size:0.85rem;color:rgba(255,255,255,0.7);">Post #3: Gen Z y futuro</span>
+            <span style="margin-left:auto;font-size:0.7rem;background:rgba(245,158,11,0.15);color:var(--amber);padding:0.15rem 0.5rem;">Tendencia</span>
+          </div>
+          <div style="display:flex;gap:1rem;align-items:center;padding:0.6rem 0;">
+            <span style="font-family:var(--font-mono);font-size:0.72rem;color:rgba(255,255,255,0.35);min-width:3rem;">VIE</span>
+            <span style="font-size:0.85rem;color:rgba(255,255,255,0.7);">Post #4: Infografía intermodal</span>
+            <span style="margin-left:auto;font-size:0.7rem;background:rgba(10,102,194,0.2);color:#93C5FD;padding:0.15rem 0.5rem;">Educativo</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="posts-grid">
+
+      <!-- POST 1: CO2 -->
+      <div class="fade-up">
+        <div class="li-post">
+          <div class="li-tag">Post #1</div>
+          <div class="li-post-header">
+            <div class="li-avatar">GT</div>
+            <div>
+              <div class="li-name">Grupo Trimodos</div>
+              <div class="li-meta">Transporte y Logística · Castellón · Hace 2 horas · 🌐</div>
+            </div>
+            <div class="li-follow">+ Seguir</div>
+          </div>
+          <div class="li-image li-image-co2 li-image-infographic">
+            <div style="font-size:0.9rem;font-weight:700;color:var(--teal);margin-bottom:0.5rem;text-align:center;">Emisiones CO₂ por modo de transporte</div>
+            <div class="infog-row">
+              <span class="infog-label">🚂 Ferrocarril</span>
+              <div class="infog-bar-wrap"><div class="infog-bar" style="width:14%;background:var(--teal);"></div></div>
+              <span class="infog-val" style="color:var(--teal);">14g/t</span>
+            </div>
+            <div class="infog-row">
+              <span class="infog-label">🚢 Marítimo</span>
+              <div class="infog-bar-wrap"><div class="infog-bar" style="width:30%;background:#5B9BD5;"></div></div>
+              <span class="infog-val" style="color:#5B9BD5;">21g/t</span>
+            </div>
+            <div class="infog-row">
+              <span class="infog-label">🚛 Carretera</span>
+              <div class="infog-bar-wrap"><div class="infog-bar" style="width:100%;background:#E11D48;"></div></div>
+              <span class="infog-val" style="color:#E11D48;">62g/t</span>
+            </div>
+            <div style="font-size:0.65rem;color:rgba(255,255,255,0.3);margin-top:0.3rem;">gramos de CO₂ por tonelada-kilómetro · Fuente: Agencia Europea de Medio Ambiente</div>
+          </div>
+          <div class="li-body">
+            <span class="li-hook">🚂 El tren emite hasta un 80% menos de CO₂ que el camión. ¿Sabes cuánto le cuesta eso a tu empresa en créditos de carbono?</span>
+            Con la normativa europea apretando y los objetivos ESG en el punto de mira, cada tonelada que mueves por ferrocarril en lugar de por carretera se convierte en un argumento ante tus clientes, inversores y reguladores.<br><br>
+            En Grupo Trimodos llevamos más de 40 años moviendo mercancías por tren desde Castellón. Hoy, eso no es solo eficiencia: es ventaja competitiva real.<br><br>
+            ¿Tu empresa exporta a Europa o mueve cargas pesadas? El intermodal puede reducir tus costes y tu huella de carbono al mismo tiempo. 👇 Cuéntanos qué mueves.
+            <span class="li-hashtags">#LogísticaSostenible #TransporteIntermodal #Castellón #ESG #Exportación</span>
+          </div>
+          <div class="li-reactions">
+            <div class="react-icons">
+              <div class="li-react-icon" style="background:#0A66C2;">👍</div>
+              <div class="li-react-icon" style="background:#E11D48;margin-left:-4px;">❤️</div>
+              <div class="li-react-icon" style="background:#F59E0B;margin-left:-4px;">💡</div>
+            </div>
+            <span style="margin-left:0.3rem;">147 · 23 comentarios</span>
+          </div>
+          <div class="li-actions">
+            <div class="li-action">👍 Me gusta</div>
+            <div class="li-action">💬 Comentar</div>
+            <div class="li-action">↗ Compartir</div>
+          </div>
+        </div>
+        <div class="post-analysis">
+          <h4>Por qué funciona</h4>
+          <ul>
+            <li>Dato concreto (80% CO₂) que genera credibilidad inmediata</li>
+            <li>Infografía visual que para el scroll del usuario</li>
+            <li>Conecta con el problema real de los clientes (ESG, normativa)</li>
+            <li>CTA claro y natural: "cuéntanos qué mueves"</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- POST 2: HISTORIA -->
+      <div class="fade-up" style="transition-delay:0.1s;">
+        <div class="li-post">
+          <div class="li-tag">Post #2</div>
+          <div class="li-post-header">
+            <div class="li-avatar">GT</div>
+            <div>
+              <div class="li-name">Grupo Trimodos</div>
+              <div class="li-meta">Transporte y Logística · Castellón · Hace 1 día · 🌐</div>
+            </div>
+            <div class="li-follow">+ Seguir</div>
+          </div>
+          <div class="li-image li-image-historia" style="flex-direction:column;gap:0.3rem;padding:1.5rem;">
+            <div style="font-family:'Playfair Display',serif;font-size:2.5rem;font-weight:900;color:#C4B5FD;line-height:1;">1982</div>
+            <div style="font-size:0.75rem;color:rgba(255,255,255,0.4);letter-spacing:0.1em;text-transform:uppercase;">Castellón, España</div>
+            <div style="width:2rem;height:1px;background:#7C3AED;margin:0.5rem 0;"></div>
+            <div style="font-size:0.85rem;color:rgba(255,255,255,0.65);text-align:center;max-width:20ch;line-height:1.5;">Arranca Stinsa con un único vagón de ferrocarril y una promesa</div>
+            <div style="margin-top:0.8rem;font-family:'Playfair Display',serif;font-size:1.1rem;font-style:italic;color:#9FE1CB;">"Mover tu carga como si fuera la nuestra."</div>
+          </div>
+          <div class="li-body">
+            <span class="li-hook">📅 En 1982, nuestro fundador empezó con un vagón de tren y la convicción de que el ferrocarril podía revolucionar la logística en Castellón.</span>
+            Hoy, 40 años después, somos tres empresas especializadas, dos almacenes en Castellón y Sevilla, y una red que cubre ferrocarril, transporte marítimo y carretera desde un único punto de contacto.<br><br>
+            Lo que no ha cambiado: la promesa de tratar cada mercancía como si fuera nuestra.<br><br>
+            ¿Llevas tiempo buscando un partner logístico que entienda tu negocio a largo plazo? Eso es exactamente lo que ofrecemos.
+            <span class="li-hashtags">#Historia #Logística #Castellón #TransporteIntermodal #Legacy</span>
+          </div>
+          <div class="li-reactions">
+            <div class="react-icons">
+              <div class="li-react-icon" style="background:#0A66C2;">👍</div>
+              <div class="li-react-icon" style="background:#E11D48;margin-left:-4px;">❤️</div>
+            </div>
+            <span style="margin-left:0.3rem;">89 · 31 comentarios</span>
+          </div>
+          <div class="li-actions">
+            <div class="li-action">👍 Me gusta</div>
+            <div class="li-action">💬 Comentar</div>
+            <div class="li-action">↗ Compartir</div>
+          </div>
+        </div>
+        <div class="post-analysis">
+          <h4>Por qué funciona</h4>
+          <ul>
+            <li>El storytelling de origen genera conexión emocional y confianza</li>
+            <li>La frase de la promesa es memorable y reutilizable en branding</li>
+            <li>Muestra trayectoria sin sonar a publicidad directa</li>
+            <li>Ideal para que el algoritmo lo amplifique a redes del fundador</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- POST 3: GEN Z -->
+      <div class="fade-up" style="transition-delay:0.2s;">
+        <div class="li-post">
+          <div class="li-tag">Post #3</div>
+          <div class="li-post-header">
+            <div class="li-avatar">GT</div>
+            <div>
+              <div class="li-name">Grupo Trimodos</div>
+              <div class="li-meta">Transporte y Logística · Castellón · Hace 3 días · 🌐</div>
+            </div>
+            <div class="li-follow">+ Seguir</div>
+          </div>
+          <div class="li-image li-image-genz" style="flex-direction:column;gap:0.4rem;padding:1.2rem;">
+            <div style="font-size:0.65rem;font-family:'DM Mono',monospace;letter-spacing:0.12em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:0.3rem;">El cliente del futuro</div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;width:100%;">
+              <div style="background:rgba(124,58,237,0.15);border:1px solid rgba(124,58,237,0.3);padding:0.8rem;text-align:center;">
+                <div style="font-family:'Playfair Display',serif;font-size:2rem;color:#C4B5FD;font-weight:900;">Z</div>
+                <div style="font-size:0.65rem;color:rgba(255,255,255,0.5);">13–28 años</div>
+                <div style="font-size:0.7rem;color:#C4B5FD;margin-top:0.3rem;">Ya decide hoy</div>
+              </div>
+              <div style="background:rgba(29,158,117,0.1);border:1px solid rgba(29,158,117,0.25);padding:0.8rem;text-align:center;">
+                <div style="font-family:'Playfair Display',serif;font-size:2rem;color:#9FE1CB;font-weight:900;">α</div>
+                <div style="font-size:0.65rem;color:rgba(255,255,255,0.5);">0–12 años</div>
+                <div style="font-size:0.7rem;color:#9FE1CB;margin-top:0.3rem;">Decide en 10 años</div>
+              </div>
+            </div>
+            <div style="font-size:0.75rem;color:var(--amber);font-weight:600;margin-top:0.3rem;text-align:center;">Buscan en Google, no llaman por teléfono</div>
+          </div>
+          <div class="li-body">
+            <span class="li-hook">🔮 El 68% de los compradores B2B son ya Millennials o Gen Z. Y en 10 años, la Generación Alpha tomará decisiones de compra.</span>
+            ¿Qué tienen en común? Nunca contratarán a un proveedor sin antes buscarlo online, leer sus reseñas y revisar su presencia en LinkedIn.<br><br>
+            En el sector logístico seguimos vendiendo como en 1995: llamadas en frío, ferias, recomendaciones boca a boca. Eso funcionará cada vez menos.<br><br>
+            Las empresas que construyan autoridad digital hoy capturarán a estos clientes cuando empiecen a decidir. Las que esperen encontrarán el mercado ocupado.<br><br>
+            ¿Está preparado tu partner logístico para el cliente del futuro? Nosotros llevamos un año construyendo ese puente. 🤝
+            <span class="li-hashtags">#GeneraciónZ #FuturoLogístico #MarketingB2B #Transformación #Castellón</span>
+          </div>
+          <div class="li-reactions">
+            <div class="react-icons">
+              <div class="li-react-icon" style="background:#0A66C2;">👍</div>
+              <div class="li-react-icon" style="background:#F59E0B;margin-left:-4px;">💡</div>
+              <div class="li-react-icon" style="background:#E11D48;margin-left:-4px;">❤️</div>
+            </div>
+            <span style="margin-left:0.3rem;">214 · 47 comentarios</span>
+          </div>
+          <div class="li-actions">
+            <div class="li-action">👍 Me gusta</div>
+            <div class="li-action">💬 Comentar</div>
+            <div class="li-action">↗ Compartir</div>
+          </div>
+        </div>
+        <div class="post-analysis">
+          <h4>Por qué funciona</h4>
+          <ul>
+            <li>Dato del 68% genera debate y comentarios (ideal para algoritmo)</li>
+            <li>Posiciona a Trimodos como empresa que piensa en el futuro</li>
+            <li>Genera conversación: otros profesionales del sector responderán</li>
+            <li>El cierre "nosotros llevamos un año construyendo ese puente" da autoridad</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- POST 4: INTERMODAL -->
+      <div class="fade-up" style="transition-delay:0.3s;">
+        <div class="li-post">
+          <div class="li-tag">Post #4</div>
+          <div class="li-post-header">
+            <div class="li-avatar">GT</div>
+            <div>
+              <div class="li-name">Grupo Trimodos</div>
+              <div class="li-meta">Transporte y Logística · Castellón · Hace 5 días · 🌐</div>
+            </div>
+            <div class="li-follow">+ Seguir</div>
+          </div>
+          <div class="li-image li-image-intermodal" style="flex-direction:column;gap:0;padding:1.2rem;">
+            <div style="font-size:0.65rem;font-family:'DM Mono',monospace;letter-spacing:0.12em;color:rgba(255,255,255,0.3);text-transform:uppercase;margin-bottom:0.8rem;">¿Cómo funciona el intermodal?</div>
+            <div style="display:flex;align-items:center;gap:0.5rem;width:100%;margin-bottom:0.3rem;">
+              <div style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);padding:0.4rem 0.6rem;font-size:0.7rem;color:#9FE1CB;white-space:nowrap;">📦 Origen</div>
+              <div style="flex:1;height:1px;background:rgba(29,158,117,0.3);position:relative;"><div style="position:absolute;right:-4px;top:-4px;width:8px;height:8px;border-top:1px solid var(--teal);border-right:1px solid var(--teal);transform:rotate(45deg);"></div></div>
+              <div style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);padding:0.4rem 0.6rem;font-size:0.7rem;color:#9FE1CB;white-space:nowrap;">🚛 Terrestre</div>
+              <div style="flex:1;height:1px;background:rgba(29,158,117,0.3);"></div>
+              <div style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);padding:0.4rem 0.6rem;font-size:0.7rem;color:#9FE1CB;white-space:nowrap;">🚂 Tren</div>
+            </div>
+            <div style="display:flex;align-items:center;gap:0.5rem;width:100%;justify-content:flex-end;">
+              <div style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);padding:0.4rem 0.6rem;font-size:0.7rem;color:#9FE1CB;white-space:nowrap;">🎯 Destino</div>
+              <div style="flex:1;height:1px;background:rgba(29,158,117,0.3);max-width:3rem;"></div>
+              <div style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);padding:0.4rem 0.6rem;font-size:0.7rem;color:#9FE1CB;white-space:nowrap;">🚛 Terrestre</div>
+              <div style="flex:1;height:1px;background:rgba(29,158,117,0.3);max-width:3rem;"></div>
+              <div style="background:rgba(29,158,117,0.2);border:1px solid rgba(29,158,117,0.4);padding:0.4rem 0.6rem;font-size:0.7rem;color:#9FE1CB;white-space:nowrap;">🚢 Mar</div>
+            </div>
+            <div style="font-size:0.68rem;color:rgba(255,255,255,0.3);margin-top:0.7rem;text-align:center;">Un único interlocutor · Sin transbordos manuales · Ahorro 15–30%</div>
+          </div>
+          <div class="li-body">
+            <span class="li-hook">📦 ¿Sabes cuánto dinero pierde tu empresa eligiendo siempre el mismo modo de transporte por costumbre?</span>
+            El transporte intermodal combina camión, ferrocarril y barco en una sola operación, con un único punto de contacto. El resultado: hasta un 30% menos de coste en rutas largas y una reducción drástica de la huella de carbono.<br><br>
+            En Grupo Trimodos diseñamos la ruta óptima para cada carga: ¿merece la pena el camión hasta el puerto y luego barco? ¿O es mejor tren directo? Depende de la distancia, el plazo y el producto.<br><br>
+            Llevamos 40 años resolviendo ese puzzle. ¿Hablamos?
+            <span class="li-hashtags">#TransporteIntermodal #Logística #Optimización #CadenaDeSuministro #Castellón</span>
+          </div>
+          <div class="li-reactions">
+            <div class="react-icons">
+              <div class="li-react-icon" style="background:#0A66C2;">👍</div>
+              <div class="li-react-icon" style="background:#F59E0B;margin-left:-4px;">💡</div>
+            </div>
+            <span style="margin-left:0.3rem;">193 · 38 comentarios</span>
+          </div>
+          <div class="li-actions">
+            <div class="li-action">👍 Me gusta</div>
+            <div class="li-action">💬 Comentar</div>
+            <div class="li-action">↗ Compartir</div>
+          </div>
+        </div>
+        <div class="post-analysis">
+          <h4>Por qué funciona</h4>
+          <ul>
+            <li>La pregunta inicial ("¿sabes cuánto pierdes?") para el scroll</li>
+            <li>El dato del 30% de ahorro es concreto y verificable</li>
+            <li>Educar sobre el intermodal posiciona a Trimodos como experto</li>
+            <li>El cierre "¿Hablamos?" es el CTA más efectivo en LinkedIn B2B</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- FASES -->
+  <section id="fases">
+    <div class="section-label">El plan de acción</div>
+    <h2 class="section-title">12 meses,<br><em>3 fases.</em></h2>
+    <p class="section-sub">
+      De cero presencia digital a empresa de referencia en logística
+      intermodal en la Comunitat Valenciana y Andalucía.
+    </p>
+
+    <div class="fases-timeline fade-up">
+      <div class="fase">
+        <div class="fase-num">1</div>
+        <div class="fase-period">Mes 1–2 · Cimientos</div>
+        <h3>Arrancar</h3>
+        <ul class="fase-items">
+          <li>Activar LinkedIn con 3–4 posts semanales</li>
+          <li>Crear perfil de Instagram y publicar las primeras 9 fotos</li>
+          <li>Añadir WhatsApp Business a la web</li>
+          <li>Mejorar el formulario de contacto por tipo de servicio</li>
+          <li>Recopilar 5 casos de éxito de clientes actuales</li>
+        </ul>
+        <div class="fase-kpi">🎯 Meta: 200 seguidores en LinkedIn</div>
+      </div>
+      <div class="fase">
+        <div class="fase-num">2</div>
+        <div class="fase-period">Mes 3–5 · Contenido</div>
+        <h3>Crecer</h3>
+        <ul class="fase-items">
+          <li>Lanzar blog con 2 artículos SEO al mes</li>
+          <li>Grabar primeros vídeos para YouTube e Instagram Reels</li>
+          <li>Iniciar newsletter mensual para clientes y leads</li>
+          <li>Lanzar campaña Google Ads acotada (Castellón/Valencia)</li>
+          <li>Publicar el primer caso de éxito documentado</li>
+        </ul>
+        <div class="fase-kpi">🎯 Meta: 500 visitas/mes al blog</div>
+      </div>
+      <div class="fase">
+        <div class="fase-num">3</div>
+        <div class="fase-period">Mes 6–12 · Escalar</div>
+        <h3>Liderar</h3>
+        <ul class="fase-items">
+          <li>Analizar qué canales generan más leads reales</li>
+          <li>Doblar la inversión en lo que funciona</li>
+          <li>LinkedIn Ads para alcanzar directores de grandes empresas</li>
+          <li>Asistir a SIL Barcelona o similar como expositores</li>
+          <li>Lanzar programa de referidos para clientes actuales</li>
+        </ul>
+        <div class="fase-kpi">🎯 Meta: 5–10 leads nuevos/mes</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CIERRE -->
+  <section id="cierre">
+    <div class="section-label">Próximos pasos</div>
+    <h2>El grupo ya tiene<br>lo más difícil:<br><em>40 años de confianza.</em></h2>
+    <p>Solo falta contárselo al mundo de la manera que los próximos clientes esperan encontrarlo.</p>
+
+    <div class="next-steps">
+      <div class="next-step">
+        <div class="next-step-num">01</div>
+        <p>Reunión para revisar y aprobar el calendario de contenidos del primer mes</p>
+      </div>
+      <div class="next-step">
+        <div class="next-step-num">02</div>
+        <p>Designar a alguien del equipo como responsable de redes sociales</p>
+      </div>
+      <div class="next-step">
+        <div class="next-step-num">03</div>
+        <p>Publicar el primer post en LinkedIn esta misma semana</p>
+      </div>
+    </div>
+
+    <a href="#posts" class="btn-primary" style="display:inline-flex;">
+      Ver los posts de ejemplo
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+    </a>
+  </section>
+
+  <footer class="site-footer">
+    <div class="footer-logo">Grupo Trimodos</div>
+    <div>grupotrimodos.com · Castellón & Sevilla</div>
+    <div>Estrategia digital 2025</div>
+  </footer>
+
+  <script>
+    // Intersection Observer for fade-up animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+    // Smooth active nav highlight
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => {
+        if (window.scrollY >= s.offsetTop - 120) current = s.id;
+      });
+      navLinks.forEach(a => {
+        a.style.color = a.getAttribute('href') === '#' + current
+          ? 'var(--teal)' : '';
+      });
+    });
+  </script>
+
+</body>
+</html>
